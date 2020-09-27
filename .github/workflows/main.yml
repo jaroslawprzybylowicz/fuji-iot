@@ -13,7 +13,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  build-and-test:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -33,11 +33,12 @@ jobs:
           mkdir -p "${GITHUB_WORKSPACE}/bin/"
           mv bazelisk-linux-amd64 "${GITHUB_WORKSPACE}/bin/bazel"
           chmod +x "${GITHUB_WORKSPACE}/bin/bazel"
-
-      - name: Test
-        run: |
-          "${GITHUB_WORKSPACE}/bin/bazel" test //...
   
       - name: Build
         run: |
           "${GITHUB_WORKSPACE}/bin/bazel" build //...
+
+      - name: Test
+        run: |
+          "${GITHUB_WORKSPACE}/bin/bazel" test //...
+      
