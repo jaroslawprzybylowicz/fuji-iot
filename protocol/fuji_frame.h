@@ -15,95 +15,94 @@
 #ifndef FUJI_FRAME_H_
 #define FUJI_FRAME_H_
 
-#include <iostream>
-#include "fuji_register.h"
 #include <bits/stdint-uintn.h>
+
 #include <array>
+#include <iostream>
 #include <string>
 
-namespace fuji_iot
-{
-    // Frames used for communication are 8-byte long. They consist of magic, destination address, type and payload.
-    // [magic, destination, register_type, register content (5-byte)]
-    enum class DestinationAddr : uint8_t
-    {
-        UNKNOWN = 0,
-        // This device.
-        WIRED_CONTROLLER_ADDR = 32,
-        // Something else that we are not.
-        OTHER = 1,
-    };
+#include "fuji_register.h"
 
-    const std::string ToString(const DestinationAddr &da);
+namespace fuji_iot {
+// Frames used for communication are 8-byte long. They consist of magic,
+// destination address, type and payload. [magic, destination, register_type,
+// register content (5-byte)]
+enum class DestinationAddr : uint8_t {
+  UNKNOWN = 0,
+  // This device.
+  WIRED_CONTROLLER_ADDR = 32,
+  // Something else that we are not.
+  OTHER = 1,
+};
 
-    std::ostream &operator<<(std::ostream &os, const DestinationAddr &da);
+const std::string ToString(const DestinationAddr &da);
 
-    enum class RegisterType
-    {
-        STATUS = 0,
-        ERROR = 1,
-        LOGIN = 2,
-        UNKNOWN = 3,
-    };
+std::ostream &operator<<(std::ostream &os, const DestinationAddr &da);
 
-    const std::string ToString(const RegisterType &rt);
+enum class RegisterType {
+  STATUS = 0,
+  ERROR = 1,
+  LOGIN = 2,
+  UNKNOWN = 3,
+};
 
-    std::ostream &operator<<(std::ostream &os, const RegisterType &rt);
+const std::string ToString(const RegisterType &rt);
 
-    // This class is helper for representing frames incoming from the main unit.
-    class FujiMasterFrame
-    {
-    public:
-        FujiMasterFrame(std::array<uint8_t, 8> data);
-        // We don't know meaning of this bit. But it is set when dest address is OTHER.
-        bool UnknownBit() const;
-        void WithUnknownBit(bool bit);
-        // Returns destination device.
-        DestinationAddr Destination() const;
-        void WithDestination(DestinationAddr dest);
-        RegisterType Type() const;
-        void WithType(RegisterType type);
-        // Just the payload (without magic and destination).
-        std::array<uint8_t, 5> Payload() const;
-        // Returns entire frame content.
-        std::array<uint8_t, 8> FullFrame() const;
-        // Print data in this frame in human readable form.
-        const std::string DebugInfo() const;
+std::ostream &operator<<(std::ostream &os, const RegisterType &rt);
 
-    private:
-        std::array<uint8_t, 8> data_;
-    };
+// This class is helper for representing frames incoming from the main unit.
+class FujiMasterFrame {
+ public:
+  FujiMasterFrame(std::array<uint8_t, 8> data);
+  // We don't know meaning of this bit. But it is set when dest address is
+  // OTHER.
+  bool UnknownBit() const;
+  void WithUnknownBit(bool bit);
+  // Returns destination device.
+  DestinationAddr Destination() const;
+  void WithDestination(DestinationAddr dest);
+  RegisterType Type() const;
+  void WithType(RegisterType type);
+  // Just the payload (without magic and destination).
+  std::array<uint8_t, 5> Payload() const;
+  // Returns entire frame content.
+  std::array<uint8_t, 8> FullFrame() const;
+  // Print data in this frame in human readable form.
+  const std::string DebugInfo() const;
 
-    std::ostream &operator<<(std::ostream &os, const FujiMasterFrame &mf);
+ private:
+  std::array<uint8_t, 8> data_;
+};
 
-    bool operator==(const FujiMasterFrame &a, const FujiMasterFrame &b);
+std::ostream &operator<<(std::ostream &os, const FujiMasterFrame &mf);
 
-    class FujiControllerFrame
-    {
-    public:
-        FujiControllerFrame();
-        FujiControllerFrame(std::array<uint8_t, 8> data);
-        DestinationAddr ControllerAddress() const;
-        RegisterType QueryRegister() const;
-        void WithQueryRegister(RegisterType register_type);
-        bool LoginBit() const;
-        void WithLoginBit(bool login);
-        bool WriteBit() const;
-        void WithWriteBit(bool write);
-        std::array<uint8_t, 5> Payload() const;
-        std::array<uint8_t, 8> FullFrame() const;
-        void WithPayload(const std::array<uint8_t, 5> &payload);
-        std::array<uint8_t, 8> BuildFrame();
-        const std::string DebugInfo() const;
+bool operator==(const FujiMasterFrame &a, const FujiMasterFrame &b);
 
-    private:
-        std::array<uint8_t, 8> data_;
-    };
+class FujiControllerFrame {
+ public:
+  FujiControllerFrame();
+  FujiControllerFrame(std::array<uint8_t, 8> data);
+  DestinationAddr ControllerAddress() const;
+  RegisterType QueryRegister() const;
+  void WithQueryRegister(RegisterType register_type);
+  bool LoginBit() const;
+  void WithLoginBit(bool login);
+  bool WriteBit() const;
+  void WithWriteBit(bool write);
+  std::array<uint8_t, 5> Payload() const;
+  std::array<uint8_t, 8> FullFrame() const;
+  void WithPayload(const std::array<uint8_t, 5> &payload);
+  std::array<uint8_t, 8> BuildFrame();
+  const std::string DebugInfo() const;
 
-    std::ostream &operator<<(std::ostream &os, const FujiControllerFrame &cf);
-    bool operator==(const FujiControllerFrame &a, const FujiControllerFrame &b);
-    bool operator!=(const FujiControllerFrame &a, const FujiControllerFrame &b);
+ private:
+  std::array<uint8_t, 8> data_;
+};
 
-} // namespace fuji_iot
+std::ostream &operator<<(std::ostream &os, const FujiControllerFrame &cf);
+bool operator==(const FujiControllerFrame &a, const FujiControllerFrame &b);
+bool operator!=(const FujiControllerFrame &a, const FujiControllerFrame &b);
+
+}  // namespace fuji_iot
 
 #endif
