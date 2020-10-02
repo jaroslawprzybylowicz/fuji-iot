@@ -5,7 +5,6 @@ all_content = """filegroup(name = "all", srcs = glob(["**"]), visibility = ["//v
 
 http_archive(
     name = "rules_cc",
-    sha256 = "d1d266f0ee34a413af9e70b27354faddc2f300d873bcc388508901121e08aff4",
     strip_prefix = "rules_cc-master",
     urls = ["https://github.com/bazelbuild/rules_cc/archive/master.zip"],
 )
@@ -59,7 +58,6 @@ http_archive(
 
 http_archive(
     name = "rules_foreign_cc",
-    sha256 = "f358144776d3dfc5a928ef32a0e4fbe93c99b55772d70cca77a6478e34d96aa7",
     strip_prefix = "rules_foreign_cc-master",
     url = "https://github.com/bazelbuild/rules_foreign_cc/archive/master.zip",
 )
