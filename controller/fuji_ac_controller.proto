@@ -17,6 +17,7 @@ syntax = "proto3";
 package fuji_iot.proto;
 
 service FujiACControllerService {
+  rpc GetStatus(StatusRequest) returns (StatusResponse) {}
   // Set new state and return status.
   rpc Update(UpdateRequest) returns (StatusResponse) {}
 }
@@ -46,6 +47,8 @@ message ACUnitState {
   Fan fan = 2;  
   int32 setpoint_temperature = 3;  
 }
+
+message StatusRequest{}
 
 message StatusResponse{
   ACUnitState state = 1;

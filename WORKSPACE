@@ -5,23 +5,52 @@ all_content = """filegroup(name = "all", srcs = glob(["**"]), visibility = ["//v
 
 http_archive(
     name = "rules_cc",
-    sha256 = "49c1a79d64d04f3fa6f98e5738906265943db094c9b6e66dbe844dd576f6faf7",
     strip_prefix = "rules_cc-master",
     urls = ["https://github.com/bazelbuild/rules_cc/archive/master.zip"],
 )
 
 git_repository(
     name = "googletest",
-    commit = "703bd9caab50b139428cea1aaff9974ebee5742e",
     remote = "https://github.com/google/googletest",
-    shallow_since = "1570114335 -0400",
+    tag = "release-1.10.0",
 )
 
 git_repository(
     name = "com_google_absl",
-    commit = "c51510d1d87ebce8615ae1752fd5aca912f6cf4c",
     remote = "https://github.com/abseil/abseil-cpp.git",
-    shallow_since = "1587584588 -0400",
+    tag = "20200225.2",
+)
+
+new_git_repository(
+    name = "paho_mqtt_c",
+    build_file_content = all_content,
+    commit = "d34c51214f4172f2e12bb17532c9f44f72a57dd4",
+    remote = "https://github.com/eclipse/paho.mqtt.c.git",
+    shallow_since = "1565130246 +0100",
+)
+
+new_git_repository(
+    name = "paho_mqtt_cpp",
+    build_file_content = all_content,
+    commit = "0e44dd31ff725d66df4a928d50a26309626dcfd5",
+    remote = "https://github.com/eclipse/paho.mqtt.cpp.git",
+    shallow_since = "1570913123 -0400",
+)
+
+new_git_repository(
+    name = "libjwt",
+    build_file_content = all_content,
+    commit = "c0b824eac696082dc2887c997bd256f5e60f8fe0",
+    remote = "https://github.com/benmcollins/libjwt.git",
+    shallow_since = "1579549527 +0000",
+)
+
+new_git_repository(
+    name = "libjansson",
+    build_file_content = all_content,
+    commit = "71c4e8ec215afa225ac20eed269a14963cd37b50",
+    remote = "https://github.com/akheron/jansson.git",
+    shallow_since = "1543219804 +0100",
 )
 
 git_repository(
@@ -39,6 +68,14 @@ git_repository(
 )
 
 http_archive(
+    name = "openssl",
+    build_file_content = all_content,
+    sha256 = "f6fb3079ad15076154eda9413fed42877d668e7069d9b87396d0804fdb3f4c90",
+    strip_prefix = "openssl-1.1.1c",
+    urls = ["https://www.openssl.org/source/openssl-1.1.1c.tar.gz"],
+)
+
+http_archive(
     name = "rules_proto",
     sha256 = "602e7161d9195e50246177e7c55b2f39950a9cf7366f74ed5f22fd45750cd208",
     strip_prefix = "rules_proto-97d8af4dc474595af3900dd85cb3a29ad28cc313",
@@ -48,10 +85,19 @@ http_archive(
     ],
 )
 
+##### gRPC Rules for Bazel
+##### See https://github.com/grpc/grpc/blob/master/src/cpp/README.md#make
+http_archive(
+    name = "com_github_grpc_grpc",
+    strip_prefix = "grpc-de893acb6aef88484a427e64b96727e4926fdcfd",
+    urls = [
+        "https://github.com/grpc/grpc/archive/de893acb6aef88484a427e64b96727e4926fdcfd.tar.gz",
+    ],
+)
+
 # Rule repository
 http_archive(
     name = "rules_foreign_cc",
-    sha256 = "f358144776d3dfc5a928ef32a0e4fbe93c99b55772d70cca77a6478e34d96aa7",
     strip_prefix = "rules_foreign_cc-master",
     url = "https://github.com/bazelbuild/rules_foreign_cc/archive/master.zip",
 )
@@ -65,3 +111,13 @@ load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_
 rules_proto_dependencies()
 
 rules_proto_toolchains()
+
+load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+
+grpc_deps()
+
+# Not mentioned in official docs... mentioned here https://github.com/grpc/grpc/issues/20511
+load("@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl", "grpc_extra_deps")
+
+grpc_extra_deps()
+
