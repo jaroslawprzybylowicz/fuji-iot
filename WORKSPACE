@@ -5,7 +5,6 @@ all_content = """filegroup(name = "all", srcs = glob(["**"]), visibility = ["//v
 
 http_archive(
     name = "rules_cc",
-    sha256 = "49c1a79d64d04f3fa6f98e5738906265943db094c9b6e66dbe844dd576f6faf7",
     strip_prefix = "rules_cc-master",
     urls = ["https://github.com/bazelbuild/rules_cc/archive/master.zip"],
 )
@@ -48,10 +47,17 @@ http_archive(
     ],
 )
 
-# Rule repository
+http_archive(
+    name = "com_github_grpc_grpc",
+    sha256 = "61272ea6d541f60bdc3752ddef9fd4ca87ff5ab18dd21afc30270faad90c8a34",
+    strip_prefix = "grpc-de893acb6aef88484a427e64b96727e4926fdcfd",
+    urls = [
+        "https://github.com/grpc/grpc/archive/de893acb6aef88484a427e64b96727e4926fdcfd.tar.gz",
+    ],
+)
+
 http_archive(
     name = "rules_foreign_cc",
-    sha256 = "f358144776d3dfc5a928ef32a0e4fbe93c99b55772d70cca77a6478e34d96aa7",
     strip_prefix = "rules_foreign_cc-master",
     url = "https://github.com/bazelbuild/rules_foreign_cc/archive/master.zip",
 )
@@ -65,3 +71,12 @@ load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_
 rules_proto_dependencies()
 
 rules_proto_toolchains()
+
+load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+
+grpc_deps()
+
+# Not mentioned in official docs... mentioned here https://github.com/grpc/grpc/issues/20511
+load("@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl", "grpc_extra_deps")
+
+grpc_extra_deps()
