@@ -1,0 +1,19 @@
+build:asan --strip=never
+build:asan --copt -fsanitize=address
+build:asan --copt -DADDRESS_SANITIZER
+build:asan --copt -O1
+build:asan --copt -g
+build:asan --copt -fno-omit-frame-pointer
+build:asan --linkopt -fsanitize=address
+
+build:tsan --strip=never
+build:tsan --copt=-fsanitize=thread
+build:tsan --copt=-fno-omit-frame-pointer
+build:tsan --copt=-DGPR_NO_DIRECT_SYSCALLS
+build:tsan --copt=-DGRPC_TSAN
+build:tsan --linkopt=-fsanitize=thread
+
+build --copt -fPIC
+build --copt -g
+build --strip=never
+test -c dbg
