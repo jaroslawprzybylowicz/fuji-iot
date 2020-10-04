@@ -4,9 +4,9 @@
 
 I have Fuji Electric AC units at home that I wanted to become integrated with my smart home network. Unfortunatelly, those are old-school devices with IR and wired remotes and no WiFi. 
 
-## This repository
+## This repository & interfacing
 
-I reverse engineered the serial protocol between wire remote controller and the AC unit by hooking up in between the AC unit and wired remote controller. This repository contains code that is the result of that work.
+This package contains a simple daemon that will convert do serial to RPC conversion of the AC unit. In order to use it, you will need a device capable of handling UART @ 500bps (author of the code used Raspberry Pi Zero). Release package contains pre-compiled ARM package suitable to use with Raspbian.
 
 ## Compatibility
 
