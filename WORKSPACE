@@ -37,14 +37,10 @@ git_repository(
     shallow_since = "1541971260 +0000",
 )
 
-http_archive(
-    name = "rules_proto",
-    sha256 = "602e7161d9195e50246177e7c55b2f39950a9cf7366f74ed5f22fd45750cd208",
-    strip_prefix = "rules_proto-97d8af4dc474595af3900dd85cb3a29ad28cc313",
-    urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/rules_proto/archive/97d8af4dc474595af3900dd85cb3a29ad28cc313.tar.gz",
-        "https://github.com/bazelbuild/rules_proto/archive/97d8af4dc474595af3900dd85cb3a29ad28cc313.tar.gz",
-    ],
+git_repository(
+     name = "rules_proto",
+     commit = "cfdc2fa31879c0aebe31ce7702b1a9c8a4be02d2",
+     remote = "https://github.com/bazelbuild/rules_proto.git",
 )
 
 http_archive(
