@@ -13,6 +13,11 @@ This package contains a simple daemon that will convert serial interface of the 
 Hardware directory contains schematics and PCB design of a Raspberry PI Zero hat that interfaces directly with the AC Unit main board. It effectively replaces UTY-TWBXF module.
 Hat converts 400V DC available on the mainboard into 5V DC necessary to power up Raspberry PI and converts Tx/Rx logic. PCB dimensions make Raspberry Pi Zero + Hat fit the AC unit internal space so that entire device is WiFi enabled without any extra cables.
 
+## Other platforms
+
+If you want to run this on ESP32 or Arduino, there is [another library](https://github.com/unreality/FujiHeatPump) based on this work ported by [unreality](https://github.com/unreality) into smaller package and available here:
+https://github.com/unreality/FujiHeatPump 
+
 ## Compatibility
 
 This software was tested against RSG09LUCA and RSG12LUCA and should interface well with Fuji Electric/Fujitsu Air conditioners that are using UTY-RNNUM, UTY-RNNXM  or similar controllers.
