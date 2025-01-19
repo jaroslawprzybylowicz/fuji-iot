@@ -16,4 +16,3 @@ build:tsan --linkopt=-fsanitize=thread
 build --copt -fPIC
 build --copt -g
 build --strip=never
-test -c dbg
