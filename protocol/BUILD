@@ -38,7 +38,7 @@ cc_library(
     deps = [
         ":fuji_ac_state",
         ":fuji_frame",
-        "@com_google_absl//absl/types:optional",
+        "@abseil-cpp//absl/types:optional",
         "@googletest//:gtest_prod",
     ],
 )
