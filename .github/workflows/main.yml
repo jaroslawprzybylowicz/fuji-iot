@@ -28,6 +28,9 @@ jobs:
           # Share repository cache between workflows.
           repository-cache: true
   
+      - name: Where Am I?
+        run: ls -la
+
       - name: Build
         run: bazel build //...
 
