@@ -5,7 +5,7 @@ cc_test(
         "//controller:fuji_ac_controller",
         "//protocol:fuji_ac_protocol_handler",
         "//sim:fuji_ac_unit_sim",
-        "@com_google_absl//absl/types:optional",
+        "@abseil-cpp//absl/types:optional",
         "@googletest//:gtest_main",
     ],
 )

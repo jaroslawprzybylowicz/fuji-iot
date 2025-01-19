@@ -5,7 +5,7 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "//protocol:fuji_frame",
-        "@com_google_absl//absl/types:optional",
+        "@abseil-cpp//absl/types:optional",
         "@glog",
 	"@googletest//:gtest_prod",
     ],

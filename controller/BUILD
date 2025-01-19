@@ -1,8 +1,8 @@
-package(default_visibility = ["//visibility:public"])
-
 load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_proto_library")
-load("@com_github_grpc_grpc//bazel:cc_grpc_library.bzl", "cc_grpc_library")
+load("@grpc//bazel:cc_grpc_library.bzl", "cc_grpc_library")
+load("@grpc//bazel:grpc_build_system.bzl", "grpc_proto_library")
+
+package(default_visibility = ["//visibility:public"])
 
 proto_library(
     name = "fuji_ac_controller_proto",
@@ -24,8 +24,8 @@ cc_library(
         ":fuji_ac_serial_interface",
         "//protocol:fuji_ac_protocol_handler",
         "//protocol:fuji_ac_state",
-        "@com_google_absl//absl/status",
-        "@com_google_absl//absl/synchronization",
+        "@abseil-cpp//absl/status",
+        "@abseil-cpp//absl/synchronization",
         "@glog",
     ],
 )
@@ -46,7 +46,7 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":fuji_ac_serial_interface",
-        "@com_google_absl//absl/time",
+        "@abseil-cpp//absl/time",
         "@glog",
     ],
 )
@@ -66,7 +66,7 @@ cc_binary(
         ":fuji_ac_controller_cc_grpc",
         ":fuji_ac_serial_reader",
         "//sim:fuji_ac_unit_sim",
-        "@com_github_grpc_grpc//:grpc++",
+        "@grpc//:grpc++",
         "@glog",
     ],
 )
@@ -76,8 +76,8 @@ cc_binary(
     srcs = ["fuji_ac_controller_client.cc"],
     deps = [
         ":fuji_ac_controller_cc_grpc",
-        "@com_github_grpc_grpc//:grpc++",
-        "@com_google_absl//absl/strings:str_format",
+        "@grpc//:grpc++",
+        "@abseil-cpp//absl/strings:str_format",
         "@glog",
     ],
 )
