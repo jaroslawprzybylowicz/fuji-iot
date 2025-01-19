@@ -27,10 +27,9 @@ jobs:
           disk-cache: ${{ github.workflow }}
           # Share repository cache between workflows.
           repository-cache: true
-  
-      - name: Where Am I?
-        run: ls -la
 
+      - uses: actions/checkout@v2
+  
       - name: Build
         run: bazel build //...
 
